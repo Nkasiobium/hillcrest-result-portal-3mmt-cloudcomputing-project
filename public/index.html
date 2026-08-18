@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hill Crest Secondary School - Result Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="school-header">
+        <div class="school-logo">
+            HC
+        </div>
+
+        <div>
+            <h1>Hill Crest Secondary School</h1>
+            <p>Awada</p>
+        </div>
+    </header>
+
+
+    <main class="container">
+
+        <section class="welcome-section">
+
+            <p class="tag">STUDENT RESULT PORTAL</p>
+
+            <h2>Check Your Academic Result</h2>
+
+            <p>
+                Enter your admission number below to view your academic result.
+            </p>
+
+        </section>
+
+
+        <section class="search-card">
+
+            <label for="admissionNumber">
+                Admission Number
+            </label>
+
+            <div class="search-area">
+
+                <input
+                    type="text"
+                    id="admissionNumber"
+                    placeholder="e.g. HCSS001"
+                >
+
+                <button onclick="checkResult()">
+                    Check Result
+                </button>
+
+            </div>
+
+            <p id="errorMessage" class="error-message"></p>
+
+        </section>
+
+
+        <section id="resultSection" class="result-section hidden">
+
+            <div class="student-header">
+
+                <div>
+                    <span>Student Name</span>
+                    <h2 id="studentName"></h2>
+                </div>
+
+                <div>
+                    <span>Admission Number</span>
+                    <h3 id="studentAdmissionNumber"></h3>
+                </div>
+
+                <div>
+                    <span>Class</span>
+                    <h3 id="studentClass"></h3>
+                </div>
+
+            </div>
+
+
+            <div class="session-info">
+
+                <div>
+                    <strong>Academic Session</strong>
+                    <span id="academicSession"></span>
+                </div>
+
+                <div>
+                    <strong>Term</strong>
+                    <span id="term"></span>
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>S/N</th>
+                            <th>Subject</th>
+                            <th>Score</th>
+                            <th>Grade</th>
+                            <th>Remark</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="resultTableBody"></tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="summary">
+
+                <div class="summary-card">
+                    <span>Total Score</span>
+                    <strong id="totalScore"></strong>
+                </div>
+
+                <div class="summary-card">
+                    <span>Average</span>
+                    <strong id="averageScore"></strong>
+                </div>
+
+                <div class="summary-card">
+                    <span>Overall Grade</span>
+                    <strong id="overallGrade"></strong>
+                </div>
+
+            </div>
+
+
+            <div class="overall-remark">
+
+                <strong>Teacher's Remark</strong>
+
+                <p id="overallRemark"></p>
+
+            </div>
+
+
+            <button class="reset-button" onclick="resetResult()">
+                Check Another Result
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 Hill Crest Secondary School, Awada
+        </p>
+
+        <p>
+            Powered by Cloud Computing
+        </p>
+
+    </footer>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>

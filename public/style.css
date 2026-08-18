@@ -1,0 +1,314 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+    min-height: 100vh;
+}
+
+
+/* HEADER */
+
+.school-header {
+    background: #12355b;
+    color: white;
+    padding: 20px 8%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.school-header h1 {
+    font-size: 24px;
+}
+
+.school-header p {
+    margin-top: 4px;
+    opacity: 0.85;
+}
+
+.school-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    color: #12355b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+
+/* MAIN */
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+
+/* WELCOME */
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.tag {
+    color: #2563eb;
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.welcome-section h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.welcome-section p:last-child {
+    color: #64748b;
+}
+
+
+/* SEARCH */
+
+.search-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.search-card label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.search-area {
+    display: flex;
+    gap: 10px;
+}
+
+.search-area input {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 16px;
+}
+
+.search-area button,
+.reset-button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.search-area button:hover,
+.reset-button:hover {
+    background: #1d4ed8;
+}
+
+
+/* ERROR */
+
+.error-message {
+    color: #dc2626;
+    margin-top: 10px;
+}
+
+
+/* RESULT */
+
+.result-section {
+    background: white;
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* STUDENT INFORMATION */
+
+.student-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.student-header span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.student-header h2,
+.student-header h3 {
+    margin-top: 5px;
+}
+
+
+/* SESSION */
+
+.session-info {
+    display: flex;
+    gap: 50px;
+    padding: 20px 0;
+}
+
+.session-info strong {
+    display: block;
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.session-info span {
+    font-weight: bold;
+}
+
+
+/* TABLE */
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #12355b;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover {
+    background: #f8fafc;
+}
+
+
+/* SUMMARY */
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.summary-card {
+    background: #f1f5f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.summary-card span {
+    display: block;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.summary-card strong {
+    display: block;
+    margin-top: 7px;
+    font-size: 22px;
+}
+
+
+/* REMARK */
+
+.overall-remark {
+    margin-top: 20px;
+    padding: 20px;
+    background: #eff6ff;
+    border-radius: 8px;
+}
+
+.overall-remark strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+
+/* RESET */
+
+.reset-button {
+    margin-top: 20px;
+}
+
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .school-header {
+        padding: 18px 5%;
+    }
+
+    .school-header h1 {
+        font-size: 18px;
+    }
+
+    .welcome-section h2 {
+        font-size: 25px;
+    }
+
+    .search-area {
+        flex-direction: column;
+    }
+
+    .student-header {
+        grid-template-columns: 1fr;
+    }
+
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .session-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+}
