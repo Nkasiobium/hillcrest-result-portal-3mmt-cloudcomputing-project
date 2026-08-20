@@ -394,7 +394,7 @@ Port 3000 is used internally by the Node.js application and does not need to be 
 After deployment, the application was tested through the EC2 public IP:
 
 ```
-http://MY_EC2_PUBLIC_IP
+http://34.234.215.184
 ```
 
 **Student result search tested with:**
@@ -408,7 +408,7 @@ http://MY_EC2_PUBLIC_IP
 **Health endpoint tested at:**
 
 ```
-http://MY_EC2_PUBLIC_IP/health
+http://34.234.215.184/health
 ```
 
 A successful health response confirmed the application was running correctly on the EC2 server.
