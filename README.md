@@ -136,60 +136,374 @@ hill-crest-result-portal/
 ├── package-lock.json
 ├── server.js
 └── README.md
+```
 
 ---
 
-## Description of Important Files
+| File | Description |
+|---|---|
+| `server.js` | Main Node.js/Express server file. Starts the application, serves the frontend, and provides the health-check endpoint. |
+| `public/index.html` | Main structure of the result portal. |
+| `public/style.css` | Styling and layout of the portal. |
+| `public/app.js` | Frontend logic, including student search and result display. |
+| `.env` | Environment-specific configuration used when running the application. |
+| `.env.example` | Example of required environment variables without exposing local configuration. |
+| `.gitignore` | Prevents files such as `.env` and `node_modules` from being uploaded to GitHub. |
+| `package.json` | Project information, dependencies, and application start scripts. |
 
-### `server.js`
+## Environment Configuration
 
-This is the main Node.js and Express server file. It starts the application, serves the frontend files and provides the health-check endpoint.
+The application uses environment variables instead of hard-coding configuration values.
 
-### `public/index.html`
+Main variables:
 
-This contains the main structure and content of the Hill Crest Secondary School Result Portal.
+```
+NODE_ENV=production
+SCHOOL_NAME=Hill Crest Secondary School, Awada
+PORT=3000
+```
 
-### `public/style.css`
+The `.env` file is **not** committed to GitHub. This follows a basic security practice of keeping environment-specific configuration separate from the source code.
 
-This contains the styling, layout and responsive design of the result portal.
+## Local Development
 
-### `public/app.js`
+Before deploying to AWS, the application was tested locally on Windows.
 
-This contains the frontend functionality of the application, including student result searching and displaying the student's academic result.
+**Step 1: Clone the project**
+```bash
+git clone https://github.com/Nkasiobium/hill-crest-result-portal.git
+```
 
-### `.env`
+**Step 2: Enter the project directory**
+```bash
+cd hill-crest-result-portal
+```
 
-This file contains environment-specific configuration used by the application.
+**Step 3: Install dependencies**
+```bash
+npm install
+```
 
-The `.env` file is not uploaded to GitHub because it is included in `.gitignore`.
+**Step 4: Create the `.env` file**
+```
+NODE_ENV=development
+SCHOOL_NAME=Hill Crest Secondary School, Awada
+PORT=3000
+```
 
-### `.env.example`
+**Step 5: Start the application**
+```bash
+npm start
+```
 
-This provides an example of the environment variables required by the application without exposing the actual environment configuration.
+The application runs locally at:
+```
+http://localhost:3000
+```
 
-### `.gitignore`
+The health endpoint can also be tested at:
+```
+http://localhost:3000/health
+```
 
-This prevents files such as `.env`, `node_modules` and other unnecessary or sensitive files from being uploaded to GitHub.
+## Health Check
 
-### `package.json`
+A simple health endpoint confirms the application is running correctly.
 
-This contains the project information, dependencies and scripts required to run the Node.js application.
+**Endpoint:**
+```
+/health
+```
 
-### `package-lock.json`
+**Example:**
+```
+http://localhost:3000/health
+```
 
-This records the exact versions of the Node.js dependencies installed for the project.
+**Successful response:**
+```json
+{
+  "status": "healthy",
+  "application": "Hill Crest Secondary School Result Portal",
+  "school": "Hill Crest Secondary School, Awada"
+}
+```
 
-### `README.md`
+This provides a simple way of checking application availability after deployment.
 
-This document explains the project, development process, cloud deployment, architecture, testing, security considerations, scaling approach and lessons learned.
+## Git and GitHub
 
----
-
-# Local Development
-
-Before deploying the application to AWS, I developed and tested it locally on my Windows computer.
-
-## Step 1: Clone the Repository
+Git was used to track project files, and GitHub to store the source code remotely.
 
 ```bash
-git clone https://github.com/YOUR-GITHUB-USERNAME/hill-crest-result-portal.git
+git init
+git add .
+git commit -m "Initial school result portal"
+git branch -M main
+git remote add origin https://github.com/Nkasiobium/hillcrest-result-portal-3mmt-cloudcomputing-project
+git push -u origin main
+```
+
+The `.env` file was excluded from GitHub using `.gitignore`.
+
+## AWS EC2 Deployment
+
+After successfully testing the application locally, it was deployed to an AWS EC2 instance.
+
+**EC2 configuration used:**
+- Ubuntu LTS EC2 instance
+- SSH key pair
+- Security Group
+- Public IPv4 address
+
+Connection to the EC2 server from a Windows computer used SSH:
+
+```bash
+ssh -i "hill-crest-key.pem" ubuntu@MY_PUBLIC_IP
+```
+
+After connecting, the server environment was confirmed:
+
+```bash
+whoami
+hostname
+pwd
+```
+
+Git and Node.js versions were also checked:
+
+```bash
+git --version
+node --version
+```
+
+## Preparing the EC2 Server
+
+Update package lists and upgrade packages:
+
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
+
+Install Git:
+
+```bash
+sudo apt install git -y
+```
+
+Clone the GitHub repository onto the EC2 server:
+
+```bash
+git clone https://github.com/Nkasiobium/hillcrest-result-portal-3mmt-cloudcomputing-project
+cd hill-crest-result-portal
+npm install
+```
+
+## Production Environment Configuration
+
+Because the local `.env` file was not uploaded to GitHub, a new `.env` file was created directly on the EC2 server:
+
+```
+NODE_ENV=production
+SCHOOL_NAME=Hill Crest Secondary School, Awada
+PORT=3000
+```
+
+This allows the application to run on port 3000 internally.
+
+## PM2 Process Management
+
+PM2 was used to run the Node.js application as a background process.
+
+Install PM2:
+
+```bash
+sudo npm install -g pm2
+```
+
+Start the application:
+
+```bash
+pm2 start server.js --name hill-crest-result-portal
+```
+
+Check application status:
+
+```bash
+pm2 status
+```
+
+Expected status: `online`
+
+Configure PM2 to restart the application automatically after a server reboot:
+
+```bash
+pm2 startup
+pm2 save
+```
+
+## Nginx Reverse Proxy
+
+Nginx is used as a reverse proxy in front of the Node.js application, allowing users to access the site through the standard HTTP port 80 while Node.js continues running internally on port 3000.
+
+**Architecture:**
+
+```
+User Browser
+     |
+     | HTTP :80
+     v
+   Nginx
+     |
+     | localhost:3000
+     v
+ Node.js / Express
+     |
+     v
+Result Portal
+```
+
+The Nginx configuration forwards requests from port 80 to `http://127.0.0.1:3000`.
+
+Test the Nginx configuration:
+
+```bash
+sudo nginx -t
+```
+
+Restart Nginx:
+
+```bash
+sudo systemctl restart nginx
+```
+
+## AWS Security Group
+
+The EC2 Security Group controls which network traffic is allowed to reach the server.
+
+| Type | Port | Source | Purpose |
+|---|---|---|---|
+| SSH | 22 | My IP | Server administration |
+| HTTP | 80 | Anywhere IPv4 | Public web access |
+
+Port 3000 is used internally by the Node.js application and does not need to be publicly exposed after Nginx is configured. Restricting SSH access to a specific IP also reduces unnecessary exposure of the server.
+
+## Application Testing
+
+After deployment, the application was tested through the EC2 public IP:
+
+```
+http://MY_EC2_PUBLIC_IP
+```
+
+**Student result search tested with:**
+- HCSS001
+- HCSS002
+- HCSS003
+- HCSS004
+- HCSS005
+- An invalid student ID (to confirm proper handling of records not found)
+
+**Health endpoint tested at:**
+
+```
+http://MY_EC2_PUBLIC_IP/health
+```
+
+A successful health response confirmed the application was running correctly on the EC2 server.
+
+## Final Architecture
+
+```
+                       INTERNET
+                           |
+                           | HTTP :80
+                           v
+                  +------------------+
+                  |     AWS EC2      |
+                  |   Ubuntu LTS     |
+                  |                  |
+                  |  Security Group  |
+                  |        |         |
+                  |      Nginx       |
+                  |        |         |
+                  |        v         |
+                  |   Node.js :3000  |
+                  |        |         |
+                  |        v         |
+                  |   Express App    |
+                  |        |         |
+                  |        v         |
+                  |   Result Portal  |
+                  +------------------+
+```
+
+This architecture is intentionally simple because this is a capstone project.
+
+## Scaling Considerations
+
+The current deployment uses one EC2 instance, which is sufficient for demonstrating the MVP. If the number of students and users increases significantly, the architecture could be improved by introducing multiple application servers behind an Application Load Balancer.
+
+**Possible future architecture:**
+
+```
+                  INTERNET
+                      |
+                      v
+            +-------------------+
+            | Application Load  |
+            |     Balancer      |
+            +---------+---------+
+                      |
+              +-------+-------+
+              |               |
+              v               v
+        +-----------+   +-----------+
+        |  EC2 #1   |   |  EC2 #2   |
+        |  Node.js  |   |  Node.js  |
+        +-----+-----+   +-----+-----+
+              |               |
+              +-------+-------+
+                      |
+                      v
+                +-----------+
+                | Database  |
+                |           |
+                | Students  |
+                | Results   |
+                +-----------+
+```
+
+The application could also be containerized using Docker and deployed using a more scalable AWS architecture as the system grows.
+
+## Database Consideration
+
+For this MVP, sample student data was used instead of a production database. This was intentional, as the main objective of the project was to demonstrate cloud deployment rather than build a complete school management system.
+
+For a real school deployment, student records would be moved into a proper database such as Amazon RDS or another managed database service. The database would contain:
+
+- Student ID
+- Student name
+- Class
+- Academic session
+- Term
+- Subjects
+- Scores
+- Grades
+- Average
+- Remarks
+
+The backend would then retrieve results securely instead of keeping student information in frontend JavaScript.
+
+## Security Considerations
+
+Some basic security practices were implemented during the project:
+
+- **Environment variables** — The `.env` file is excluded from GitHub.
+- **SSH** — SSH access is restricted to a specific IP address through the EC2 Security Group.
+- **Nginx** — Used as the public-facing web server while Node.js runs internally.
+- **Port exposure** — The final configuration exposes HTTP port 80 publicly while keeping Node.js port 3000 internal.
+- **Sample data** — The application only contains fictional sample student data. No real student information was used.
+```bash
+git clone https://github.com/Nkasiobium/hill-crest-result-portal.git
