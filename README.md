@@ -136,3 +136,57 @@ hill-crest-result-portal/
 ├── package-lock.json
 ├── server.js
 └── README.md
+## Description of Important Files
+
+### `server.js`
+
+This is the main Node.js and Express server file. It starts the application, serves the frontend files and provides the health-check endpoint.
+
+### `public/index.html`
+
+This contains the main structure and content of the Hill Crest Secondary School Result Portal.
+
+### `public/style.css`
+
+This contains the styling, layout and responsive design of the result portal.
+
+### `public/app.js`
+
+This contains the frontend functionality of the application, including student result searching and displaying the student's academic result.
+
+### `.env`
+
+This file contains environment-specific configuration used by the application.
+
+The `.env` file is not uploaded to GitHub because it is included in `.gitignore`.
+
+### `.env.example`
+
+This provides an example of the environment variables required by the application without exposing the actual environment configuration.
+
+### `.gitignore`
+
+This prevents files such as `.env`, `node_modules` and other unnecessary or sensitive files from being uploaded to GitHub.
+
+### `package.json`
+
+This contains the project information, dependencies and scripts required to run the Node.js application.
+
+### `package-lock.json`
+
+This records the exact versions of the Node.js dependencies installed for the project.
+
+### `README.md`
+
+This document explains the project, development process, cloud deployment, architecture, testing, security considerations, scaling approach and lessons learned.
+
+---
+
+# Local Development
+
+Before deploying the application to AWS, I developed and tested it locally on my Windows computer.
+
+## Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/YOUR-GITHUB-USERNAME/hill-crest-result-portal.git
