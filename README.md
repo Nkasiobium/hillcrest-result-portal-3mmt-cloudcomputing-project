@@ -137,6 +137,8 @@ hill-crest-result-portal/
 ├── server.js
 └── README.md
 
+---
+
 ## Description of Important Files
 
 ### `server.js`
