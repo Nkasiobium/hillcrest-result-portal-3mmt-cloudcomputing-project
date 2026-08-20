@@ -1,0 +1,42 @@
+**Architecture:**
+
+```
+User Browser
+     |
+     | HTTP :80
+     v
+   Nginx
+     |
+     | localhost:3000
+     v
+ Node.js / Express
+     |
+     v
+Result Portal
+```
+
+## Final Architecture
+
+```
+                       INTERNET
+                           |
+                           | HTTP :80
+                           v
+                  +------------------+
+                  |     AWS EC2      |
+                  |   Ubuntu LTS     |
+                  |                  |
+                  |  Security Group  |
+                  |        |         |
+                  |      Nginx       |
+                  |        |         |
+                  |        v         |
+                  |   Node.js :3000  |
+                  |        |         |
+                  |        v         |
+                  |   Express App    |
+                  |        |         |
+                  |        v         |
+                  |   Result Portal  |
+                  +------------------+
+```
