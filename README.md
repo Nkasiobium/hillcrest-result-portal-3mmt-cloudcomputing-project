@@ -171,7 +171,7 @@ Before deploying to AWS, the application was tested locally on Windows.
 
 **Step 1: Clone the project**
 ```bash
-git clone https://github.com/Nkasiobium/hill-crest-result-portal.git
+git clone https://github.com/Nkasiobium/hillcrest-result-portal-3mmt-cloudcomputing-project
 ```
 
 **Step 2: Enter the project directory**
